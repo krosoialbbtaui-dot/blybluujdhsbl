@@ -5,13 +5,11 @@
 <title>Adwan Portfolio</title>
 
 <style>
-/* ===== ROOT ===== */
 :root{
   --red:#ff2a2a;
   --muted:#aaaaaa;
 }
 
-/* ===== RESET ===== */
 *{
   margin:0;
   padding:0;
@@ -19,19 +17,20 @@
   font-family:Arial, Helvetica, sans-serif;
 }
 
-html{ scroll-behavior:smooth; }
-
-/* ===== BACKGROUND ===== */
-body{
-  min-height:100vh;
+html,body{
+  height:100%;
+  overflow:hidden;
   color:white;
+}
+
+body{
   background:
     linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.65)),
     url("https://i.postimg.cc/WbSnPz2K/de318baa-c393-457d-b968-ec428cfeef41.jpg")
     center / cover no-repeat fixed;
 }
 
-/* ===== NAVBAR ===== */
+/* NAVBAR */
 nav{
   position:fixed;
   top:0;
@@ -45,24 +44,46 @@ nav{
 }
 
 nav h2 span{ color:var(--red); }
-
 nav a{
   margin-left:20px;
-  text-decoration:none;
+  cursor:pointer;
   color:var(--muted);
+  text-decoration:none;
 }
 nav a:hover{ color:var(--red); }
 
-/* ===== SECTION ===== */
-section{
-  min-height:100vh;
-  padding:100px 40px;
+/* SLIDER */
+.slider{
+  display:flex;
+  width:300vw;
+  height:100vh;
+  transition:.8s ease;
 }
 
-/* ===== HERO ===== */
+section{
+  width:100vw;
+  height:100vh;
+  padding:120px 40px;
+  flex-shrink:0;
+}
+
+/* HERO */
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:40px;
+}
+
 .hero h1{ font-size:46px; }
 .hero h1 span{ color:var(--red); }
-.hero p{ margin-top:15px; color:var(--muted); max-width:500px; }
+
+.hero p{
+  margin-top:15px;
+  color:var(--muted);
+  max-width:420px;
+}
+
 .hero button{
   margin-top:25px;
   padding:12px 25px;
@@ -72,12 +93,28 @@ section{
   cursor:pointer;
 }
 
-/* ===== ABOUT ===== */
+/* HERO PHOTO */
+.hero-photo{
+  background:#120000;
+  padding:15px;
+  border-radius:20px;
+  max-width:420px;
+  justify-self:end;
+  box-shadow:0 0 30px rgba(255,42,42,.3);
+}
+.hero-photo img{
+  width:100%;
+  border-radius:15px;
+  object-fit:cover;
+}
+
+/* ABOUT */
 .about{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:30px;
 }
+
 .code{
   background:#0f0f0f;
   padding:20px;
@@ -86,30 +123,27 @@ section{
   font-family:monospace;
 }
 
-/* ===== PROJECT ===== */
+/* PROJECT */
 .projects{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
 }
+
 .card{
   background:#120000;
   border-radius:10px;
   overflow:hidden;
-  transform:translateY(50px);
-  opacity:0;
-  transition:.7s;
 }
-.card.show{
-  transform:translateY(0);
-  opacity:1;
-}
+
 .card img{
   width:100%;
   height:150px;
   object-fit:cover;
 }
+
 .card .content{ padding:15px; }
+
 .card button{
   margin-top:10px;
   padding:6px 12px;
@@ -118,7 +152,7 @@ section{
   color:var(--red);
 }
 
-/* ===== POPUP ===== */
+/* POPUP */
 #contactModal{
   position:fixed;
   inset:0;
@@ -129,11 +163,16 @@ section{
   z-index:999;
 }
 
-/* ===== RESPONSIVE ===== */
+/* RESPONSIVE */
 @media(max-width:768px){
-  section{ padding:90px 20px; }
-  .about{ grid-template-columns:1fr; }
-  .hero h1{ font-size:32px; }
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .hero-photo{
+    justify-self:center;
+    margin-top:30px;
+  }
 }
 </style>
 </head>
@@ -143,37 +182,56 @@ section{
 <nav>
   <h2>adwan<span>.dev</span></h2>
   <div>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
+    <a onclick="goSlide(0)">Home</a>
+    <a onclick="goSlide(1)">About</a>
+    <a onclick="goSlide(2)">Info</a>
   </div>
 </nav>
 
-<section class="hero" id="home">
-  <div>
-    <h1>Hi, I’m <span>Adwan</span></h1>
-    <p>Website resmi Adwan.</p>
-    <button onclick="openContact()">Contact Me</button>
-  </div>
-</section>
+<div class="slider">
 
-<section id="about">
-  <h2>About Me</h2><br>
-  <div class="about">
-    <p style="color:var(--muted)">Bisa tapi males, bikin pas gabut.</p>
-    <div class="code">
+  <!-- HOME -->
+  <section class="hero">
+    <div>
+      <h1>Hi, I’m <span>Adwan</span></h1>
+      <p>
+        Seorang admin & creator gabut.<br>
+        Suka bikin website dan hal random.
+      </p>
+      <button onclick="openContact()">Contact Me</button>
+    </div>
+
+    <div class="hero-photo">
+      <img src="https://i.postimg.cc/Gpk6bTc1/IMG-20251229-WA0002.jpg">
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section>
+    <h2>About Me</h2><br>
+    <div class="about">
+      <p style="color:var(--muted)">
+        Bisa tapi males.<br>
+        Ngerjain pas gabut.
+      </p>
+      <div class="code">
 <pre>
 name: "Adwan"
 role: "Admin"
 skills: ["Builder","Jungler","Ngaji"]
 </pre>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="projects">
-  <h2>Gua</h2><br>
+  <!-- INFO -->
+  <section>
+      
+  <h2>INFO & SOSIAL MEDIA</h2><br>
+
   <div class="projects">
+
+    <!-- Instagram -->
     <div class="card">
       <img src="https://i.postimg.cc/50DcF9LW/Proyek-Baru-498-3C16C10.png">
       <div class="content">
@@ -184,63 +242,125 @@ skills: ["Builder","Jungler","Ngaji"]
       </div>
     </div>
 
+    <!-- TikTok -->
     <div class="card">
-      <img src="https://i.postimg.cc/X7Wj6DrJ/IMG-20251220-WA0050.jpg">
+      <img src="https://i.postimg.cc/Gpk6bTc1/IMG-20251229-WA0002.jpg">
       <div class="content">
-        <h3>Saweria</h3>
-        <a href="https://saweria.co/Adwan" target="_blank">
-          <button>Donate</button>
+        <h3>TikTok</h3>
+        <a href="https://www.tiktok.com/@ardan_yuhuhhuu" target="_blank">
+          <button>Follow</button>
         </a>
       </div>
     </div>
-  </div>
-</section>
+    
+    <!-- Saweria -->
+    <div class="card">  
+  <img src="https://i.postimg.cc/X7Wj6DrJ/IMG-20251220-WA0050.jpg">  
+  <div class="content">  
+    <h3>Saweria</h3>  
+    <a href="https://saweria.co/Adwan" target="_blank">  
+      <button>Donate</button>  
+    </a>  
+  </div>  
+</div>  
 
-<!-- POPUP -->
-<div id="contactModal">
+ 
+    <!-- Coming Soon 1 --> 
+   
+ 
+   <div class="card">
+      <img src="https://via.placeholder.com/400x200?text=Coming+Soon">
+      <div class="content">
+        <h3>Coming Soon</h3>
+        <button disabled style="opacity:.5">Soon</button>
+      </div>
+    </div>
+
+    <!-- Coming Soon 2 -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x200?text=Coming+Soon">
+      <div class="content">
+        <h3>Coming Soon</h3>
+        <button disabled style="opacity:.5">Soon</button>
+      </div>
+    </div>
+
+    <!-- Coming Soon 3 -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x200?text=Coming+Soon">
+      <div class="content">
+        <h3>Coming Soon</h3>
+        <button disabled style="opacity:.5">Soon</button>
+      </div>
+    </div>
+
+    <!-- Coming Soon 4 -->
+    <div class="card">
+      <img src="https://via.placeholder.com/400x200?text=Coming+Soon">
+      <div class="content">
+        <h3>Coming Soon</h3>
+        <button disabled style="opacity:.5">Soon</button>
+      </div>
+    </div>
+
+  </div>
+  </section>
+      <div class="card">
+        <img src="https://via.placeholder.com/400x200?text=Coming+Soon">
+        <div class="content">
+          <h3>Coming Soon</h3>
+          <button disabled style="opacity:.5">Soon</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- CONTACT -->
+<div id="contactModal" onclick="closeContact()">
   <div onclick="event.stopPropagation()" style="
     background:#120000;
     padding:25px;
     border-radius:10px;
     width:300px;
-    position:relative;
-  ">
+    position:relative;">
     <span onclick="closeContact()" style="
-      position:absolute;
-      top:10px; right:15px;
-      cursor:pointer;
-      color:#ff2a2a;
-      font-size:20px;
-    ">✖</span>
-<p>
-  WhatsApp:
-  <a href="https://wa.me/6285955317303" target="_blank" style="color:#ff2a2a">
-    085955317303
-  </a>
-</p>
+      position:absolute;top:10px;right:15px;
+      cursor:pointer;color:#ff2a2a;font-size:20px;">✖</span>
+
     <h3>Contact Adwan</h3><br>
-    <p>TikTok: <a href="https://www.tiktok.com/@ardan_yuhuhhuu" target="_blank" style="color:#ff2a2a">@ardan_yuhuhhuu</a></p>
+    <p>WA:
+      <a href="https://wa.me/6285955317303" target="_blank" style="color:#ff2a2a">
+        085955317303
+      </a>
+    </p>
   </div>
 </div>
 
 <script>
+let current = 0;
+const slider = document.querySelector(".slider");
+const total = document.querySelectorAll("section").length;
+
+function goSlide(i){
+  if(i<0 || i>=total) return;
+  current = i;
+  slider.style.transform = `translateX(-${i*100}vw)`;
+}
+
+window.addEventListener("wheel",(e)=>{
+  if(e.deltaY>0) goSlide(current+1);
+  else goSlide(current-1);
+});
+
 function openContact(){
   document.getElementById("contactModal").style.display="flex";
 }
 function closeContact(){
   document.getElementById("contactModal").style.display="none";
 }
-document.getElementById("contactModal").onclick = closeContact;
-
-// animasi scroll
-const cards=document.querySelectorAll(".card");
-window.addEventListener("scroll",()=>{
-  cards.forEach(card=>{
-    if(card.getBoundingClientRect().top < innerHeight-100){
-      card.classList.add("show");
-    }
-  });
-});
 </script>
 
 </body>
